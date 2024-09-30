@@ -1,0 +1,14 @@
+name: MScES
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - numpy
+  - pandas
+  - matplotlib
+  - scipy
+  - seaborn
+  - geopandas
+  - pandapower
+  - spyder
+  - jupyterlab
