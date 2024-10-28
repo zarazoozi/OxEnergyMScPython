@@ -3,12 +3,22 @@
 """
 Copyright 2024 University of Oxford. All Rights Reserved.
 The authors, being Dr Scot Wheeler, have asserted their moral rights.
+
+This is the module docstring. It can be used to introduce the purpose and
+key functionality of the module. It will appear in documentation/help.
+As an example, in the spyder help window (top right subwindow be default), 
+type scipy.optimize to see an example of the docstring for the 
+optimize module of the scipy library.
+
+The very first line of the script is an optional shebang line. It tells the 
+operating system which interpreter to use to execute the code if the script 
+was treated as a stadalone executable.
 """
 
 # import required libraries
 import math
-import numpy
-import pandas
+import numpy as np
+import pandas as pd
 
 
 def calc_pv_array_size(building_width, building_length,
