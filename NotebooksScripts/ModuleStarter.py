@@ -93,7 +93,7 @@ def battery_charge_action(soc, power, E_tot, P_max, T):
     P_max: float
         The maximum power capacity of the battery (in power units kW)
     T: float
-        The length of time of a single period. Default is 1.
+        The length of time (hr) of a single period. Default is 1 hr.
 
     Returns
     --------
@@ -112,8 +112,9 @@ def battery_charge_action(soc, power, E_tot, P_max, T):
         # think about the physical constraints of the battery (e.g. energy stored, power capacity)
         # think about if your energy is positive or negative
         
-    else:
-        
+    else:  # zero powerflow
+        # set deltaE to zero
+    
     # update soc and calculate net_power
     return soc, net_power
 
@@ -138,14 +139,18 @@ class Battery():
 
         # add you conditional battery model from above, adjusting to include
         # the self keyword.
-        if power > 0:  # excess demand - discharge the battery
-            deltaE = -1 * min(self.P_max * T, self.soc, power * T)
-        elif power < 0:  # excess generation - charge the battery
-            deltaE = min(self.P_max * T, (self.E_tot - self.soc), -1 * power * T)
+        if power > 0:  
+            # excess demand - discharge the battery
+        elif power < 0:  
+            # excess generation - charge the battery
         else:
             deltaE = 0
+        
+        # update soc 
         self.soc += deltaE
-        net_power = power + (deltaE / T)
+        # and calculate net_power
+        
+        
         return net_power
 
 
