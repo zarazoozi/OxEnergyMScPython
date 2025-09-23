@@ -1,14 +1,12 @@
-name: MScES
+name: EnergyMSc_1
 channels:
   - conda-forge
-  - defaults
 dependencies:
   - numpy
   - pandas
   - matplotlib
   - scipy
   - seaborn
-  - geopandas
-  - pandapower
+  - plotly
   - spyder
   - jupyterlab
