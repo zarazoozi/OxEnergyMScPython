@@ -18,5 +18,5 @@ The current course is taught by Dr Scot Wheeler and Prof. Sarah Sparrow.
 Course material has been prepared by Dr Scot Wheeler based on a previous version prepared by Dr Masaō Ashtine. 
 
 Copyright 2025 University of Oxford. All Rights Reserved.
-The authors, being Dr Scot Wheeler and Dr Masaō Ashtine, have asserted their moral rights.
+The authors, being Dr Scot Wheeler, Dr Masaō Ashtine and Dr Zhihao Dai, have asserted their moral rights.
 
