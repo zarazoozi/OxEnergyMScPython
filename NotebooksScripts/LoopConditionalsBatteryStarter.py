@@ -75,7 +75,7 @@ for : # <--- Fill in the for loop to iterate over the range of demand_P length
     if i == 0:
         soc_E[0] = soc_0  # Maintain initial SoC
     else:
-        soc_E[i]  # Update SoC based on previous timestep's SoC and battery power
+        soc_E[i]  # Update SoC based on previous timestep's SoC and battery power, remember you need to convert power to energy
 
     # update the net demand after battery operation
     net_demand_P[i] =
