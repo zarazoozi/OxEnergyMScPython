@@ -15,11 +15,16 @@ operating system which interpreter to use to execute the code if the script
 was treated as a stadalone executable.
 """
 
+# Complete the script by filling in the missing code sections marked with <---.
+
 # import required libraries
 import math
 import numpy as np
 import pandas as pd
 
+# =============================================================================
+# Calculate PV array size function
+# =============================================================================
 
 def calc_pv_array_size(building_width, building_length,
                        roof_angle, pv_width, pv_height,
@@ -48,106 +53,135 @@ def calc_pv_array_size(building_width, building_length,
 
     Returns
     -------
-    total_panels : float
-        Maximum number of PV panels that fit on the roof.
     total_power : float
         Total power of PV array in kW.
-
+    total_panels : float
+        Maximum number of PV panels that fit on the roof.
     """
 
-    # add your code to calculate PV array size below. You may wish to use
-    # the comments below to structure your code.
+    # <--- add your code to calculate PV array size from the previous exercise.
 
-
-    # calculate rooftop dimensions accounting for angle
-
-    # calculate maximum panels in each dimension (better than using total area) and two different orientations
-    # // is the python floor division operator. Could also use math.floor(roof_length // pv_width)
-
-    # calculate the number of panels by multiplying x and y number of panels
-
-    # calculate the total power of the system
-
-    return total_panels, total_power
+    return total_power_kw, total_panels
 
 # =============================================================================
-# Basic conditional battery function
+# Example PV class
 # =============================================================================
-def battery_charge_action(soc, power, E_tot, P_max, T):
+class PV():
     """
-    This is a docstring. Use it to explain to the user what a function does.
-    It will automatically be read by 'help' functions such as in spyder.
-    
-    This function decides if to charge or discharge a battery based on a 
-    simple conditional battery model, within a single time period of length T
-    hours.
+    PV object
 
     Parameters
     ----------
-    soc: float
-        The state of charge (in energy units kWh) of battery at start of period.
-    power: float
-        The power demand (units of power e.g. kW)
-    E_tot: float
-        The energy capacity of the battery (in energy units kWh)
-    P_max: float
-        The maximum power capacity of the battery (in power units kW)
-    T: float
-        The length of time (hr) of a single period. Default is 1 hr.
-
-    Returns
-    --------
-    soc: float
-        The updated state of charge of a battery at the end of period.
-    net_demand: float
-        The net demand post battery operation.
+    pv_id : str
+        Unique identifier for the PV asset.
+    capacity_factor : list or numpy array
+        Capacity factor (kW/kWp) profile for the PV asset.
+    dt : float
+        Time step in hours.
+    peak_power_kw : float, optional
+        Peak power of the PV asset in kW. The default is 4.0 kW.
     """
-    if power > 0:  # excess demand - discharge the battery
-        # calculate the energy discharged within a single time period.
-        # think about the physical constraints of the battery (e.g. energy stored, power capacity)
-        # think about if your energy is positive or negative
-        
-    elif power < 0:  # excess generation - charge the battery
-        # calculate the energy charged within a single time period.
-        # think about the physical constraints of the battery (e.g. energy stored, power capacity)
-        # think about if your energy is positive or negative
-        
-    else:  # zero powerflow
-        # set deltaE to zero
-    
-    # update soc and calculate net_power
-    return soc, net_power
 
+    def __init__(self, pv_id, capacity_factor, dt, peak_power_kw=4.0,):
+        self.id = pv_id
+        self.capacity_factor = capacity_factor
+        self.peak_power_kw = peak_power_kw
+        self.T = len(capacity_factor)
+        self.dt = dt
+
+        # we can call the method to calculate the output profile on initialisation
+        self.pv_output = self.pv_power_output()
+
+    def pv_power_output(self):
+        """
+        Calculate the PV power output profile.
+
+        Returns
+        -------
+        pv_output : list
+            Power output profile of the PV asset in kW.
+        """
+        self.pv_output_p = self.capacity_factor * self.peak_power_kw
+        return pv_output_p
 
 # =============================================================================
 # Basic conditional battery class
 # =============================================================================
-class Battery():
+class Storage():
     """
-    Battery object docstring
+    Storage object
+
+    Parameters
+    ----------
+    id : str
+        Unique identifier for the battery asset.
+    T : int
+        Total number of time periods.
+    max_soc : float, optional
+        Maximum state of charge (kWh). The default is 10.0 kWh.
+    min_soc : float, optional
+        Minimum state of charge (kWh). The default is 1.0 kWh.
+    max_power : float, optional
+        Maximum power the battery can handle (kW). The default is 15.0 kW.
+    efficiency : float, optional
+        Base battery efficiency. The default is 0.98.
+    dt_degradation : float, optional
+        Battery degradation factor. The default is 0.01.
+    soc_0 : float, optional
+        Initial state of charge (kWh). The default is 5.0 kWh.
+    model : str, optional
+        Battery model name. The default is "Tesla Powerwall".
     """
 
-    def __init__(self, b_id, E_tot=13.5, P_max=11.5, soc_0=7.0, model="Tesla Powerwall"):
-        self.id = b_id
-        self.model = model
-        self.E_tot = E_tot
-        self.P_max = P_max
-        self.soc_0 = soc_0
-        self.soc = soc_0  # initialise to initial SOC
+    def __init__(self, id, T, dt, max_soc=10.0, min_soc=1.0, max_power=15.0,
+                  efficiency=0.98, dt_degradation=0.01, soc_0=5.0,
+                    model="Tesla Powerwall"):
+        self.id = id
+        self.T = T # Total number of time periods
+        self.dt = dt # Time step in hours
+        self.max_soc = max_soc  # Maximum state of charge (kWh)
+        self.min_soc = min_soc   # Minimum state of charge (kWh)
+        self.max_power = max_power # Maximum power the battery can handle (kW)
+        self.efficiency = efficiency    # Base battery efficiency
+        self.dt_degradation = dt_degradation    # Battery degradation factor
+        self.soc_0 = soc_0  # Initial state of charge (kWh)
+        self.model = model  # Battery model name
 
-    def battery_charge_action(self, power, T):
+        self.storage_power = [0] * self.T  # Initialize storage power list
+        self.soc_E = [self.soc_0] * self.T  # Initialize state of charge list
+        
 
+    def battery_charge_action(self, demand_P, t):
+        """
+        This function decides if to charge or discharge a battery based on a 
+        simple conditional battery model, within a single time period t of length dt.
+        It returns the net demand after the storage action.
+        
+        Parameters
+        ----------
+        demand_P : float
+            The power demand (units of power e.g. kW)
+        t : int
+            The current time period index.
+            
+        Returns
+        -------
+        net_demand : float
+            The net demand post battery operation.
+        """
         # add you conditional battery model from above, adjusting to include
         # the self keyword.
-        if power > 0:  
-            # excess demand - discharge the battery
-        elif power < 0:  
-            # excess generation - charge the battery
+        if demand_P > 0:  
+            # <--- add your code to discharge the battery (remember the first period, t=0, is dealt with separately)
+        elif demand_P < 0:  
+            # <--- add your code to charge the battery (remember the first period, t=0, is dealt with separately)
         else:
-            deltaE = 0
+            self.storage_power[t] = 0
+            
+        # update the state of charge
+        self.soc_E[t] = 
         
-        # update soc 
-        self.soc += deltaE
+
         # and calculate net_power
         
         
