@@ -133,7 +133,7 @@ class Storage():
         Battery model name. The default is "Tesla Powerwall".
     """
 
-    def __init__(self, id, T, dt, max_soc=10.0, min_soc=1.0, max_power=15.0,
+    def __init__(self, id, T, dt, max_soc=14.0, min_soc=0.5, max_power=11.0,
                   efficiency=0.98, dt_degradation=0.01, soc_0=5.0,
                     model="Tesla Powerwall"):
         self.id = id

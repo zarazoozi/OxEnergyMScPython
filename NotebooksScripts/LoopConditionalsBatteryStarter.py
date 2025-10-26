@@ -26,9 +26,9 @@ import math
 
 # Initialize battery parameters and variables
 dt = 1  # Time step in hours
-max_soc = 10  # Maximum state of charge (kWh)
-min_soc = 1   # Minimum state of charge (kWh)
-max_power = 15 # Maximum power the battery can handle (kW)
+max_soc = 14  # Maximum state of charge (kWh)
+min_soc = 0.5   # Minimum state of charge (kWh)
+max_power = 11.0 # Maximum power the battery can handle (kW)
 efficiency = 0.98    # Base battery efficiency
 dt_degradation = 0.01    # Battery degradation factor
 soc_0 = 5  # Initial state of charge (kWh)
