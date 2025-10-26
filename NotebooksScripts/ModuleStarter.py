@@ -185,7 +185,7 @@ class Storage():
         # and calculate net_power
         
         
-        return net_power
+        return net_demand_P_t
 
 
 if __name__ == "__main__":
