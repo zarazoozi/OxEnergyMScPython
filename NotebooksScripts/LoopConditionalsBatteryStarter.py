@@ -41,7 +41,7 @@ demand_P = [5, -8, 12, -3, 7, -10, 15, -5, 8, -2]
 
 # Initialize lists to store battery power, state of charge and the new net demand after battery operation
 bat_P = [0] * len(demand_P)  # List to store battery power for each period, initialized to 0
-soc_E =   # <--- List to store state of charge, starting at 50 kWh
+soc_E = [soc_0] * len(demand_P)  # <--- List to store state of charge, starting at 5 kWh
 net_demand_P =  # <--- List to store net demand after battery operation
 
 # write code with the general structure:
@@ -57,28 +57,28 @@ net_demand_P =  # <--- List to store net demand after battery operation
 for : # <--- Fill in the for loop to iterate over the range of demand_P length
     
     # Conditional logic - check if demand is positive, negative or 0
-    if demand_P[i] 0: # <--- Complete the condition to check if demand is positive
+    if demand_P[t] 0: # <--- Complete the condition to check if demand is positive
         # Case (a): Positive demand means discharge the battery
         # Calculate battery power (discharge = negative internal battery power)
-        bat_P[i] = -1 * demand_P[i]
+        bat_P[t] = -1 * demand_P[t]
         
     el # <--- complete the else if condition to check if demand is negative:
         # Case (b): Negative demand means charge the battery  
         # Calculate battery power (charging = positive internal power)
-        bat_P[i] = 
+        bat_P[t] = 
 
     else:
         # Case (c): Zero demand means no battery operation
-        bat_P[i] = 0  # No power change
+        bat_P[t] = 0  # No power change
 
     # Update state of charge (SoC) based on battery power and time step
-    if i == 0:
+    if t == 0:
         soc_E[0] = soc_0  # Maintain initial SoC
     else:
-        soc_E[i]  # Update SoC based on previous timestep's SoC and battery power, remember you need to convert power to energy
+        soc_E[t]  # Update SoC based on previous timestep's SoC and battery power, remember you need to convert power to energy
 
     # update the net demand after battery operation
-    net_demand_P[i] =
+    net_demand_P[t] =
 
 # Print the final state of charge
 print() # <--- Add a print statement to display the final state of charge. 
