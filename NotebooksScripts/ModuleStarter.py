@@ -24,9 +24,15 @@ import pandas as pd
 
 # =============================================================================
 # Calculate PV array size function
+def calculate_pv_size(building_length_m, building_width_m, roof_angle_deg, panel_width, panel_length, panel_thickness, panel_power_kw ): # <--- include parameters for building length, width, roof angle, panel width, panel height and panel power
+    area_roof_m2 = (building_length_m * building_width_m )/math.cos(math.radians(roof_angle_deg))  
+    panel_number = area_roof_m2 / ((panel_width/1000) * (panel_length/1000))  # <--- Calculate number of panels that fit on the roof
+    voltage_from_PV= panel_power_kw * panel_number # <--- Calculate roof area considering roof angle
+    return (panel_number, voltage_from_PV) # <--- return the total PV capacity in kW and number of panels
+ # <--- call the function with appropriate arguments
 # =============================================================================
 
-def calc_pv_array_size(building_width, building_length,
+#def calc_pv_array_size(building_width, building_length,
                        roof_angle, pv_width, pv_height,
                        pv_power):
     """
@@ -60,7 +66,8 @@ def calc_pv_array_size(building_width, building_length,
     """
 
     # <--- add your code to calculate PV array size from the previous exercise.
-
+result = calculate_pv_size (30, 10, 22, 1032.0 ,1872.0 ,40.0 ,0.4) 
+print(result) # <--- call the function with appropriate arguments
     return total_power_kw, total_panels
 
 # =============================================================================
