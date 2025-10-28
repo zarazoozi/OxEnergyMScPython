@@ -30,7 +30,7 @@ max_soc = 14  # Maximum state of charge (kWh)
 min_soc = 0.5   # Minimum state of charge (kWh)
 max_power = 11.0 # Maximum power the battery can handle (kW)
 efficiency = 0.98    # Base battery efficiency
-dt_degradation = 0.01    # Battery degradation factor
+self_discharge = 0.01    # Battery self-discharge rate per time step
 soc_0 = 5  # Initial state of charge (kWh)
 
 # Create the demand variable as a list (this represents energy demand over 10 periods)
@@ -40,7 +40,7 @@ demand_P = [5, -8, 12, -3, 7, -10, 15, -5, 8, -2]
 
 
 # Initialize lists to store battery power, state of charge and the new net demand after battery operation
-bat_P = [0] * len(demand_P)  # List to store battery power for each period, initialized to 0
+bat_P = [0] * len(demand_P)  # List to store battery power for each period, initialized to 0.
 soc_E = [soc_0] * len(demand_P)  # <--- List to store state of charge, starting at 5 kWh
 net_demand_P =  # <--- List to store net demand after battery operation
 
